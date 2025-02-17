@@ -1,4 +1,4 @@
-# e_marketing_app
+# ruach_connect
 
 A new Flutter project.
 
