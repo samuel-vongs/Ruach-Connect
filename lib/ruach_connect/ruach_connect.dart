@@ -1,31 +1,30 @@
+import 'package:fintech_app/ruach_connect/music_screen.dart';
+import 'package:fintech_app/ruach_connect/prayer_charge.dart';
+import 'package:fintech_app/ruach_connect/sounds_screen.dart';
 import 'package:fintech_app/screens/edit_profile.dart';
-import 'package:fintech_app/screens/user_profile.screen.dart';
 import 'package:fintech_app/services/auth_service.dart';
-import 'package:fintech_app/spirit-nerds/prayer_charge.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../screens/transaction_history_screen.dart';
 
-class SpiritNerdsScreen extends StatefulWidget {
-  const SpiritNerdsScreen({super.key});
+class RuachConnectScreen extends StatefulWidget {
+  const RuachConnectScreen({super.key});
 
   @override
-  _SpiritNerdsScreenState createState() => _SpiritNerdsScreenState();
+  State<RuachConnectScreen> createState() => _RuachConnectScreenState();
 }
 
-class _SpiritNerdsScreenState extends State<SpiritNerdsScreen> {
+class _RuachConnectScreenState extends State<RuachConnectScreen> {
   int _selectedIndex = 0; // For bottom navigation bar
 
   // Bottom navigation bar items
   static const List<Widget> _widgetOptions = <Widget>[
     HomeContent(), // Main home content
-    TransactionHistoryScreen(
-        userId: 'currentUserId'), // Replace with dynamic userId
-    UserProfileScreen(),
+    SoundsScreen(), // Replace with dynamic userId
+    MusicScreen(),
     PrayerCharge(),
   ];
 
@@ -36,10 +35,53 @@ class _SpiritNerdsScreenState extends State<SpiritNerdsScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    fetchUserData();
+  Widget build(BuildContext context) {
+    Provider.of<User?>(context);
+
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.grey.shade800,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.surround_sound),
+              label: 'Sounds',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.music),
+              label: 'Music',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.power),
+              label: 'Prayer chants',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.deepOrange,
+          unselectedItemColor: Colors.grey.shade500,
+          onTap: _onItemTapped,
+        ),
+      ),
+    );
   }
+}
+
+class HomeContent extends StatefulWidget {
+  const HomeContent({super.key});
+
+  @override
+  _HomeContentState createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
   Map<String, String>? userData;
 
@@ -54,6 +96,124 @@ class _SpiritNerdsScreenState extends State<SpiritNerdsScreen> {
   }
 
   final _advancedDrawerController = AdvancedDrawerController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        resetInputs();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  void resetInputs() {
+    setState(() {});
+  }
+
+  List<Map<String, String>> sermons = [
+    {
+      'title': 'Separated Unto God - 2024',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '4',
+      'plays': '1',
+      'downloads': '2',
+    },
+    {
+      'title': 'Exploring God',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '6',
+      'plays': '1',
+      'downloads': '7',
+    },
+    {
+      'title': 'Ways of Altars',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '7',
+      'plays': '1',
+      'downloads': '3',
+    },
+    {
+      'title': 'Exploring God',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '6',
+      'plays': '1',
+      'downloads': '7',
+    },
+    {
+      'title': 'Ways of Altars',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '7',
+      'plays': '1',
+      'downloads': '3',
+    },
+    {
+      'title': 'Exploring God',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '6',
+      'plays': '1',
+      'downloads': '7',
+    },
+    {
+      'title': 'Ways of Altars',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '7',
+      'plays': '1',
+      'downloads': '3',
+    },
+    {
+      'title': 'Exploring God',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '6',
+      'plays': '1',
+      'downloads': '7',
+    },
+    {
+      'title': 'Ways of Altars',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '7',
+      'plays': '1',
+      'downloads': '3',
+    },
+    {
+      'title': 'Exploring God',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '6',
+      'plays': '1',
+      'downloads': '7',
+    },
+    {
+      'title': 'Ways of Altars',
+      'preacher': 'Apostle Arome Osayi',
+      'likes': '7',
+      'plays': '1',
+      'downloads': '3',
+    },
+    // Add more sermons here...
+  ];
+
+  List<Map<String, String>> preachers = [
+    {
+      'preacher': 'Apostle Arome Osayi',
+      'number': '908',
+    },
+    {
+      'preacher': 'Apostle Benjamin Borno',
+      'number': '708',
+    },
+    {
+      'preacher': 'Apostle Gideon Odoma',
+      'number': '890',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -458,9 +618,8 @@ class _SpiritNerdsScreenState extends State<SpiritNerdsScreen> {
             ],
           ),
         ),
-        controller: _advancedDrawerController,
-        backdropColor: Colors.black,
         child: Scaffold(
+          backgroundColor: Colors.black,
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 80,
@@ -560,353 +719,176 @@ class _SpiritNerdsScreenState extends State<SpiritNerdsScreen> {
               ),
             ],
           ),
-          backgroundColor: Colors.black,
-          body: _widgetOptions.elementAt(_selectedIndex),
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Colors.grey.shade800,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.surround_sound),
-                label: 'Sounds',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(FontAwesomeIcons.music),
-                label: 'Music',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.power),
-                label: 'Prayer chants',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.deepOrange,
-            unselectedItemColor: Colors.grey.shade500,
-            onTap: _onItemTapped,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void drawerControl() {
-    _advancedDrawerController.showDrawer();
-  }
-
-  void _navigateToEditProfile() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditProfileScreen(
-          onProfileUpdated: () {
-            fetchUserData();
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
-
-  @override
-  _HomeContentState createState() => _HomeContentState();
-}
-
-class _HomeContentState extends State<HomeContent>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        resetInputs();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  void resetInputs() {
-    setState(() {});
-  }
-
-  List<Map<String, String>> sermons = [
-    {
-      'title': 'Separated Unto God - 2024',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '4',
-      'plays': '1',
-      'downloads': '2',
-    },
-    {
-      'title': 'Exploring God',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '6',
-      'plays': '1',
-      'downloads': '7',
-    },
-    {
-      'title': 'Ways of Altars',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '7',
-      'plays': '1',
-      'downloads': '3',
-    },
-    {
-      'title': 'Exploring God',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '6',
-      'plays': '1',
-      'downloads': '7',
-    },
-    {
-      'title': 'Ways of Altars',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '7',
-      'plays': '1',
-      'downloads': '3',
-    },
-    {
-      'title': 'Exploring God',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '6',
-      'plays': '1',
-      'downloads': '7',
-    },
-    {
-      'title': 'Ways of Altars',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '7',
-      'plays': '1',
-      'downloads': '3',
-    },
-    {
-      'title': 'Exploring God',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '6',
-      'plays': '1',
-      'downloads': '7',
-    },
-    {
-      'title': 'Ways of Altars',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '7',
-      'plays': '1',
-      'downloads': '3',
-    },
-    {
-      'title': 'Exploring God',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '6',
-      'plays': '1',
-      'downloads': '7',
-    },
-    {
-      'title': 'Ways of Altars',
-      'preacher': 'Apostle Arome Osayi',
-      'likes': '7',
-      'plays': '1',
-      'downloads': '3',
-    },
-    // Add more sermons here...
-  ];
-
-  List<Map<String, String>> preachers = [
-    {
-      'preacher': 'Apostle Arome Osayi',
-      'number': '908',
-    },
-    {
-      'preacher': 'Apostle Benjamin Borno',
-      'number': '708',
-    },
-    {
-      'preacher': 'Apostle Gideon Odoma',
-      'number': '890',
-    },
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    Provider.of<User?>(context);
-
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Quick links',
-              style: GoogleFonts.roboto().copyWith(
-                  fontSize: 14,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(50, 40),
-                      backgroundColor: Colors.grey.shade900,
-                      shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16))),
-                    ),
-                    onPressed: () {},
-                    label: Text(
-                      'Recent Downloads',
-                      style: GoogleFonts.roboto().copyWith(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.download_rounded,
-                      color: Colors.green,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(50, 40),
-                      backgroundColor: Colors.grey.shade900,
-                      shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(16))),
-                    ),
-                    onPressed: () {},
-                    label: Text(
-                      'Upload Sermons',
-                      style: GoogleFonts.roboto().copyWith(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.upload_rounded,
-                      color: Colors.yellowAccent,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            DefaultTabController(
-              length: 2,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TabBar(
-                    labelPadding: EdgeInsets.symmetric(horizontal: 10),
-                    tabAlignment: TabAlignment.center,
-                    dividerColor: Colors.transparent,
-                    labelStyle: GoogleFonts.roboto().copyWith(
-                      fontSize: 12,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    physics: BouncingScrollPhysics(),
-                    controller: _tabController,
-                    indicatorColor: Colors.deepOrange,
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.grey.shade500,
-                    tabs: [
-                      Tab(
-                        text: 'New Sermons',
-                      ),
-                      Tab(
-                        text: 'Favourite Preachers',
-                      ),
-                    ],
+                  Text(
+                    'Quick links',
+                    style: GoogleFonts.roboto().copyWith(
+                        fontSize: 14,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 1.3,
-                    child: TabBarView(
-                      controller: _tabController,
+                    height: 10,
+                  ),
+                  SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       children: [
-                        ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: sermons.length,
-                          itemBuilder: (context, index) {
-                            return buildNewSermons(
-                              sermons[index]['title'] ?? '',
-                              sermons[index]['preacher'] ?? '',
-                              sermons[index]['likes'] ?? '',
-                              sermons[index]['plays'] ?? '',
-                              sermons[index]['downloads'] ?? '',
-                              Icons.play_circle_fill,
-                              Icons.favorite,
-                              Icons.download_rounded,
-                              Icons.play_arrow,
-                              Icons.more_vert,
-                            );
-                          },
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(50, 40),
+                            backgroundColor: Colors.grey.shade900,
+                            shape: ContinuousRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16))),
+                          ),
+                          onPressed: () {},
+                          label: Text(
+                            'Recent Downloads',
+                            style: GoogleFonts.roboto().copyWith(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.download_rounded,
+                            color: Colors.green,
+                          ),
                         ),
-                        Column(
-                          children: [
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: preachers.length,
-                              itemBuilder: (context, index) {
-                                return buildFavouritePreachers(
-                                  preachers[index]['preacher'] ?? '',
-                                  preachers[index]['number'] ?? '',
-                                  ' Sermons',
-                                  '  |  ',
-                                  Icons.play_circle_fill,
-                                );
-                              },
+                        SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(50, 40),
+                            backgroundColor: Colors.grey.shade900,
+                            shape: ContinuousRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16))),
+                          ),
+                          onPressed: () {},
+                          label: Text(
+                            'Upload Sermons',
+                            style: GoogleFonts.roboto().copyWith(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
-                            SizedBox(
-                              height: 20,
+                          ),
+                          icon: Icon(
+                            Icons.upload_rounded,
+                            color: Colors.yellowAccent,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TabBar(
+                          labelPadding: EdgeInsets.symmetric(horizontal: 10),
+                          tabAlignment: TabAlignment.center,
+                          dividerColor: Colors.transparent,
+                          labelStyle: GoogleFonts.roboto().copyWith(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          physics: BouncingScrollPhysics(),
+                          controller: _tabController,
+                          indicatorColor: Colors.deepOrange,
+                          labelColor: Colors.white,
+                          unselectedLabelColor: Colors.grey.shade500,
+                          tabs: [
+                            Tab(
+                              text: 'New Sermons',
                             ),
-                            ElevatedButton.icon(
-                              iconAlignment: IconAlignment.end,
-                              onPressed: () {},
-                              label: Text(
-                                'Add More Preachers',
-                                style: GoogleFonts.roboto().copyWith(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              icon: Icon(
-                                FontAwesomeIcons.plus,
-                                color: Colors.white,
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(double.infinity, 50),
-                                backgroundColor: Colors.deepOrange,
-                                shape: ContinuousRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(16)),
-                                ),
-                              ),
-                            )
+                            Tab(
+                              text: 'Favourite Preachers',
+                            ),
                           ],
+                        ),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 1.3,
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: sermons.length,
+                                itemBuilder: (context, index) {
+                                  return buildNewSermons(
+                                    sermons[index]['title'] ?? '',
+                                    sermons[index]['preacher'] ?? '',
+                                    sermons[index]['likes'] ?? '',
+                                    sermons[index]['plays'] ?? '',
+                                    sermons[index]['downloads'] ?? '',
+                                    Icons.play_circle_fill,
+                                    Icons.favorite,
+                                    Icons.download_rounded,
+                                    Icons.play_arrow,
+                                    Icons.more_vert,
+                                  );
+                                },
+                              ),
+                              Column(
+                                children: [
+                                  ListView.builder(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: preachers.length,
+                                    itemBuilder: (context, index) {
+                                      return buildFavouritePreachers(
+                                        preachers[index]['preacher'] ?? '',
+                                        preachers[index]['number'] ?? '',
+                                        ' Sermons',
+                                        '  |  ',
+                                        Icons.play_circle_fill,
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  ElevatedButton.icon(
+                                    iconAlignment: IconAlignment.end,
+                                    onPressed: () {},
+                                    label: Text(
+                                      'Add More Preachers',
+                                      style: GoogleFonts.roboto().copyWith(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    icon: Icon(
+                                      FontAwesomeIcons.plus,
+                                      color: Colors.white,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size(double.infinity, 50),
+                                      backgroundColor: Colors.deepOrange,
+                                      shape: ContinuousRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(16)),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -914,7 +896,7 @@ class _HomeContentState extends State<HomeContent>
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -1125,6 +1107,23 @@ class _HomeContentState extends State<HomeContent>
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  void drawerControl() {
+    _advancedDrawerController.showDrawer();
+  }
+
+  void _navigateToEditProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfileScreen(
+          onProfileUpdated: () {
+            fetchUserData();
+          },
+        ),
       ),
     );
   }

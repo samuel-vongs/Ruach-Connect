@@ -1,3 +1,6 @@
+import 'package:fintech_app/ruach_connect/music_screen.dart';
+import 'package:fintech_app/ruach_connect/ruach_connect.dart';
+import 'package:fintech_app/ruach_connect/sounds_screen.dart';
 import 'package:fintech_app/screens/airtime_data_screen.dart';
 import 'package:fintech_app/screens/deposit_screen.dart';
 import 'package:fintech_app/screens/forgot_password_screen.dart';
@@ -8,7 +11,6 @@ import 'package:fintech_app/screens/receive_money_screen.dart';
 import 'package:fintech_app/screens/save_money_screen.dart';
 import 'package:fintech_app/screens/settings_screen.dart';
 import 'package:fintech_app/screens/sign_up_screen.dart';
-import 'package:fintech_app/spirit-nerds/spirit_nerds.dart';
 import 'package:fintech_app/screens/splash_screen.dart';
 import 'package:fintech_app/screens/user_profile.screen.dart';
 import 'package:fintech_app/services/auth_service.dart';
@@ -39,19 +41,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Fintech App',
-      initialRoute: '/spirit-nerd',
+      initialRoute: '/music',
       routes: {
         '/splash': (context) => SplashScreen(),
         '/welcome': (context) => WelcomePage(),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignUpScreen(),
         '/home': (context) => HomeScreen(),
-        '/spirit-nerd': (context) => SpiritNerdsScreen(),
+        '/spirit-nerd': (context) => RuachConnectScreen(),
         '/deposit': (context) => DepositScreen(),
         '/receive': (context) => ReceiveMoneyScreen(),
         '/save': (context) => SaveMoneyScreen(),
         '/airtime': (context) => AirtimeDataScreen(),
         '/user-profile': (context) => UserProfileScreen(),
+        '/sounds': (context) => SoundsScreen(),
+        '/music': (context) => MusicScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),
         '/settings': (context) => SettingsScreen(),
         '/notifications': (context) => NotificationScreen(),
